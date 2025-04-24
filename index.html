@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Հայկ & Միլենա</title>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet"/>
+  <audio id="weddingMusic" src="harsaniq.mp3"></audio>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Parisienne', cursive;
+      background: url('wedding-background.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #fef3ea;
+      text-align: center;
+      scroll-behavior: smooth;
+      position: relative;
+      height: 100%;
+      min-height: 100vh;
+    }
+
+    /* Մգեցնող շերտ */
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    .container {
+      padding: 5rem 1rem 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .invitation-text {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-family: 'Georgia', serif;
+      color: #fff3ed;
+      text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 1.4s ease both;
+      margin-bottom: 2.5rem;
+    }
+
+    .name-container {
+      width: 70vw;
+      max-width: 280px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 3px solid #eac3b0;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(255, 200, 180, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: bounceIn 2s ease;
+      margin: 0 auto 2rem;
+    }
+
+    .name-container::before {
+      content: "";
+      position: absolute;
+      width: 92%;
+      height: 92%;
+      border: 2px dashed #f3d0bd;
+      border-radius: 50%;
+      animation: rotate 20s linear infinite;
+      box-shadow: 0 0 20px rgba(255, 230, 200, 0.5);
+    }
+
+    .couple-name {
+      font-size: clamp(1.8rem, 6vw, 3.2rem);
+      line-height: 2;
+      color: #fff5f2;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+      animation: glow 3s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    .invitation-subtext {
+      font-size: clamp(1.2rem, 4vw, 2.2rem);
+      font-family: 'Georgia', serif;
+      animation: slideInLeft 1.6s ease;
+      margin-bottom: 1.2rem;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      animation: slideInRight 1.8s ease;
+      margin-bottom: 2rem;
+    }
+
+    .countdown-item {
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 210, 190, 0.3);
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      box-shadow: 0 0 14px rgba(255, 220, 200, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .countdown-item:hover {
+      transform: scale(1.07);
+    }
+
+    .countdown-item span {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #fff1e8;
+    }
+
+    .invitation-message {
+      font-size: clamp(1rem, 4vw, 1.6rem);
+      line-height: 1.8;
+      animation: fadeInUp 2s ease;
+      margin-top: 3rem;
+    }
+
+    .invitation-date {
+      display: block;
+      font-size: 2.1rem;
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #f8dcd2;
+      letter-spacing: 5px;
+    }
+
+    .wedding-icon {
+      width: 280px;
+      max-width: 90%;
+      margin: 2.5rem auto;
+      animation: softRotate 25s linear infinite;
+      filter: drop-shadow(0 0 6px rgba(255, 215, 150, 0.4));
+      transition: transform 0.4s ease;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wedding-icon:hover {
+      transform: scale(1.05);
+    }
+
+    .ceremony-section {
+      margin: 3rem auto;
+      padding: 2rem 1.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      max-width: 600px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(255, 230, 200, 0.3);
+      animation: fadeInUp 2.2s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ceremony-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .ceremony-time,
+    .ceremony-location {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .location-button {
+      margin-top: 1rem;
+      display: inline-block;
+      padding: 10px 24px;
+      background-color: rgba(231, 194, 182, 0.2);
+      border: 1px solid rgba(231, 194, 182, 0.5);
+      color: #f7dbcc;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .location-button:hover {
+      background-color: rgba(231, 194, 182, 0.4);
+      box-shadow: 0 0 10px rgba(255, 215, 190, 0.4);
+      transform: scale(1.05);
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #fff4f0, 0 0 10px #e6c5b8; }
+      to { text-shadow: 0 0 15px #ffe2d8, 0 0 30px #ffcdbb; }
+    }
+
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.3); }
+      50% { opacity: 1; transform: scale(1.05); }
+      70% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes softRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .invitation-date { font-size: 1.4rem; }
+      .ceremony-title { font-size: 1.4rem; }
+      .ceremony-time, .ceremony-location { font-size: 1.2rem; }
+      .location-button { font-size: 1rem; padding: 8px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-overlay"></div>
+  <!-- Երաժշտության նվագարկման կոճակ -->
+<div style="margin: 2rem auto; text-align: center;">
+  <button onclick="toggleMusic()" style="
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid #eac3b0;
+    border-radius: 14px;
+    color: #fff3ed;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+  " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    🎵
+  </button>
+</div>
+
+  <div class="container">
+    <div class="invitation-text">Հարսանյաց հրավիրատոմս</div>
+    <div class="name-container">
+      <div class="couple-name">Hayk<br>Milena</div>
+    </div>
+    <div class="invitation-subtext">Հարսանիքին մնաց</div>
+    <div class="countdown" id="countdown">
+      <div class="countdown-item"><span id="days">00</span>օր</div>
+      <div class="countdown-item"><span id="hours">00</span>ժամ</div>
+      <div class="countdown-item"><span id="minutes">00</span>րոպե</div>
+      <div class="countdown-item"><span id="seconds">00</span>վարկյան</div>
+    </div>
+    <div class="invitation-message">
+      Սիրով հրավիրում ենք Ձեզ մեզ հետ կիսելու մեր կյանքի<br>
+      կարևոր և հիշարժան օրը<br>
+      <span class="invitation-date">08 | 06 | 2025</span>
+    </div>
+  </div>
+
+  <img src="wedding-icon.png" alt="Wedding Icon" class="wedding-icon">
+
+  <div class="ceremony-section">
+    <div class="ceremony-title">Պսակադրության արարողություն</div>
+    <div class="ceremony-time">16:00</div>
+    <div class="ceremony-location">Սուրբ Թադեոս եկեղեցի</div>
+    <a  href="https://yandex.com/maps/?text=Սուրբ Թադեոս եկեղեցի" target="_blank" class="location-button">Ինչպես հասնել</a>
+  </div>
+
+  <img src="wedding-icon1.png" alt="Wedding Icon" class="wedding-icon">
+  <div class="ceremony-section">
+    <div class="ceremony-title">Հարսանյաց հանդիսություն</div>
+    <div class="ceremony-time">18:00</div>
+    <div class="ceremony-location">Հրաշք Այգի</div>
+    <a href="https://yandex.com/maps/?text=Հրաշք Այգի ռեստորան"  target="_blank" class="location-button">Ինչպես հասնել</a>
+  </div>
+
+  <img src="wedding-icon2.png" alt="Wedding Icon" class="wedding-icon">
+  <div class="invitation-text">Սիրով սպասում ենք Ձեզ</div>
+  <br>
+  <br>
+
+  <script>
+    const targetDate = new Date("2025-06-08T17:00:00").getTime();
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      if (distance < 0) return;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").textContent = String(days).padStart(2, '0');
+      document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+    let isPlaying = false;
+  const audio = document.getElementById("weddingMusic");
+
+  function toggleMusic() {
+  const btn = document.querySelector("button");
+  if (isPlaying) {
+    audio.pause();
+    btn.textContent = "🎵";
+  } else {
+    audio.play();
+    btn.textContent = "❚❚";
+  }
+  isPlaying = !isPlaying;
+}
+
+  </script>
+</body>
+</html>
